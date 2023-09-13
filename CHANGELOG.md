@@ -1,3 +1,13 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+* Add functions
+* toHex
+* toBin
+* cryptoBoxBeforeNm
+* cryptoSecretBoxEasy
+* cryptoSecretBoxOpenEasy
+* cryptoKxKeyPair
+* cryptoSecretBoxKeyBytes
+* cryptoSecretBoxNonceBytes
+* cryptoSecretBoxMacBytes
+* randomBytesBuf
