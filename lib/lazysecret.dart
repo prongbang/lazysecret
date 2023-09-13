@@ -38,7 +38,8 @@ abstract class LazySecret {
     String nonce,
     String key,
   ) {
-    throw UnimplementedError('cryptoSecretBoxOpenEasy() has not been implemented.');
+    throw UnimplementedError(
+        'cryptoSecretBoxOpenEasy() has not been implemented.');
   }
 
   Future<KeyPair> cryptoKxKeyPair() {
@@ -46,14 +47,17 @@ abstract class LazySecret {
   }
 
   Future<int> cryptoSecretBoxKeyBytes() {
-    throw UnimplementedError('cryptoSecretBoxKeyBytes() has not been implemented.');
+    throw UnimplementedError(
+        'cryptoSecretBoxKeyBytes() has not been implemented.');
   }
 
   Future<int> cryptoSecretBoxNonceBytes() {
-    throw UnimplementedError('cryptoSecretBoxNonceBytes() has not been implemented.');
+    throw UnimplementedError(
+        'cryptoSecretBoxNonceBytes() has not been implemented.');
   }
 
   Future<int> cryptoSecretBoxMacBytes() {
-    throw UnimplementedError('cryptoSecretBoxMacBytes() has not been implemented.');
+    throw UnimplementedError(
+        'cryptoSecretBoxMacBytes() has not been implemented.');
   }
 }
