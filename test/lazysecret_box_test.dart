@@ -6,7 +6,7 @@ import 'package:lazysecret/lazysecret_box.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  LazySecret lazySecret = LazySecretBox();
+  LazySecret lazysecret = LazySecretBox();
 
   const MethodChannel channel = MethodChannel('lazysecret');
 
@@ -23,5 +23,9 @@ void main() {
   tearDown(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, null);
+  });
+
+  test('$LazySecretBox is the default instance', () {
+    expect(lazysecret, isInstanceOf<LazySecretBox>());
   });
 }
