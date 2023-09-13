@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:lazysecret/kx/key_pair.dart';
 
-import 'package:flutter/services.dart';
 import 'package:lazysecret/lazysecret.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -16,35 +17,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _lazysecretPlugin = LazySecret();
+  String _result = '';
+  final _lazysecret = LazySecret.instance;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _lazysecretPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+    _processLazySecret();
   }
 
   @override
@@ -55,9 +34,69 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Text(_result),
         ),
       ),
     );
+  }
+
+  void _processLazySecret() async {
+    // Size
+    final nonceSize = await _lazysecret.cryptoSecretBoxNonceBytes();
+    final keySize = await _lazysecret.cryptoSecretBoxKeyBytes();
+    final macSize = await _lazysecret.cryptoSecretBoxMacBytes();
+
+    // Nonce
+    final nonceByte = await _lazysecret.randomBytesBuf(nonceSize);
+    final nonce = await _lazysecret.toHex(nonceByte);
+    final bytesNonce = await _lazysecret.toBin(nonce);
+    print('key[$keySize]');
+    print('mac[$macSize]');
+    print('nonce[${nonceByte.length}:$nonceSize]: $nonceByte');
+    print('nonce[${nonce.length}]: $nonce');
+    print('nonce[${bytesNonce.length}:${nonceByte.length}]: $bytesNonce');
+
+    _result += 'key[$keySize]\n';
+    _result += 'mac[$macSize]\n';
+    _result += 'nonce[${nonceByte.length}:$nonceSize]: $nonceByte\n';
+    _result += 'nonce[${nonce.length}]: $nonce\n';
+    _result += 'nonce[${bytesNonce.length}:${nonceByte.length}]: $bytesNonce\n';
+
+    // Key Pair
+    final clientKeyPair = await _lazysecret.cryptoKxKeyPair();
+    final serverKeyPair = await _lazysecret.cryptoKxKeyPair();
+
+    // Key Exchange
+    final clientKx = KeyPair(pk: serverKeyPair.pk, sk: clientKeyPair.sk);
+    final serverKx = KeyPair(pk: clientKeyPair.pk, sk: serverKeyPair.sk);
+
+    final clientSharedKey = await _lazysecret.cryptoBoxBeforeNm(clientKx);
+    final serverSharedKey = await _lazysecret.cryptoBoxBeforeNm(serverKx);
+
+    // Payload
+    const message = 'Lazysecret';
+    print('message: $message');
+
+    // Encrypt
+    final ciphertext = await _lazysecret.cryptoSecretBoxEasy(
+      message,
+      nonce,
+      clientSharedKey,
+    );
+    print('ciphertext: $ciphertext');
+
+    // Decrypt
+    final plaintext = await _lazysecret.cryptoSecretBoxOpenEasy(
+      ciphertext,
+      nonce,
+      serverSharedKey,
+    );
+    print('plaintext: $plaintext');
+
+    _result += 'message: $message\n';
+    _result += 'ciphertext: $ciphertext\n';
+    _result += 'plaintext: $plaintext\n';
+
+    setState(() {});
   }
 }

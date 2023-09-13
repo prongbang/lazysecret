@@ -4,7 +4,7 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: '>=2.18.0 <4.0.0'
+  sdk: '>=2.19.0 <4.0.0'
   flutter: ">=3.3.0"
 
 dependencies:
@@ -35,9 +35,9 @@ flutter:
     platforms:
       android:
         package: com.prongbang.lazysecret
-        pluginClass: LazysecretPlugin
+        pluginClass: LazySecretPlugin
       ios:
-        pluginClass: LazysecretPlugin
+        pluginClass: LazySecretPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

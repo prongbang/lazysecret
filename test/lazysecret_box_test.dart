@@ -24,8 +24,4 @@ void main() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, null);
   });
-
-  test('getPlatformVersion', () async {
-    expect(await lazySecret.getPlatformVersion(), '42');
-  });
 }

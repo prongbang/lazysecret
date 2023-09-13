@@ -1,10 +1,10 @@
 import Flutter
 import UIKit
 
-public class LazysecretPlugin: NSObject, FlutterPlugin {
+public class LazySecretPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "lazysecret", binaryMessenger: registrar.messenger())
-    let instance = LazysecretPlugin()
+    let instance = LazySecretPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
