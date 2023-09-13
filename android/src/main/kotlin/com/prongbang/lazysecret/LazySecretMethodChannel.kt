@@ -34,7 +34,8 @@ class LazySecretMethodChannel(
             val hasBin = call.hasArgument("bin")
             if (hasBin) {
                 val bin = call.argument<ByteArray>("bin") ?: byteArrayOf()
-                result.success(lazySecret.toHex(bin))
+                val hex = lazySecret.toHex(bin).lowercase()
+                result.success(hex)
             } else {
                 val exception = Exception("Byte arrays not found")
                 result.error(PARAMETER_NOT_FOUND_ERROR_CODE, exception.message, exception)
@@ -52,7 +53,8 @@ class LazySecretMethodChannel(
             val hasSize = call.hasArgument("size")
             if (hasSize) {
                 val size = call.argument<Int>("size") ?: 0
-                result.success(lazySecret.randomBytesBuf(size))
+                val bytes = lazySecret.randomBytesBuf(size)
+                result.success(bytes)
             } else {
                 val exception = Exception("Size not found")
                 result.error(PARAMETER_NOT_FOUND_ERROR_CODE, exception.message, exception)
@@ -75,7 +77,7 @@ class LazySecretMethodChannel(
                     lazySecret.fromHexString(pk),
                     lazySecret.fromHexString(sk),
                 )
-                val sharedKey = lazySecret.cryptoBoxBeforeNm(keyPair)
+                val sharedKey = lazySecret.cryptoBoxBeforeNm(keyPair).lowercase()
                 result.success(sharedKey)
             } else {
                 val exception = Exception("Pk or Sk string not found")
@@ -89,13 +91,12 @@ class LazySecretMethodChannel(
                 val plaintext = call.argument<String>("plaintext") ?: ""
                 val nonce = call.argument<String>("nonce") ?: ""
                 val key = call.argument<String>("key") ?: ""
-                result.success(
-                    lazySecret.cryptoSecretBoxEasy(
-                        plaintext = plaintext,
-                        nonce = lazySecret.toBin(nonce),
-                        key = lazySecret.fromHexString(key),
-                    )
-                )
+                val data = lazySecret.cryptoSecretBoxEasy(
+                    plaintext = plaintext,
+                    nonce = lazySecret.toBin(nonce),
+                    key = lazySecret.fromHexString(key),
+                ).lowercase()
+                result.success(data)
             } else {
                 val exception = Exception("PlainText or nonce or key string not found")
                 result.error(PARAMETER_NOT_FOUND_ERROR_CODE, exception.message, exception)
@@ -108,13 +109,12 @@ class LazySecretMethodChannel(
                 val text = call.argument<String>("ciphertext") ?: ""
                 val nonce = call.argument<String>("nonce") ?: ""
                 val key = call.argument<String>("key") ?: ""
-                result.success(
-                    lazySecret.cryptoSecretBoxOpenEasy(
-                        ciphertext = text,
-                        nonce = lazySecret.toBin(nonce),
-                        key = lazySecret.fromHexString(key),
-                    )
+                val data = lazySecret.cryptoSecretBoxOpenEasy(
+                    ciphertext = text,
+                    nonce = lazySecret.toBin(nonce),
+                    key = lazySecret.fromHexString(key),
                 )
+                result.success(data)
             } else {
                 val exception = Exception("CipherText or nonce or key string not found")
                 result.error(PARAMETER_NOT_FOUND_ERROR_CODE, exception.message, exception)

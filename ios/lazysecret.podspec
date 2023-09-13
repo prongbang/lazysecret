@@ -4,20 +4,21 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'lazysecret'
-  s.version          = '0.0.1'
-  s.summary          = 'A new Flutter project.'
+  s.version          = '1.0.0'
+  s.summary          = 'Lazysecret is a comprehensive Flutter implementation of the libsodium secret_box library.'
   s.description      = <<-DESC
-A new Flutter project.
+Lazysecret is a comprehensive Flutter implementation of the libsodium secret_box library.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/prongbang/lazysecret'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = 'prongbang'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.dependency 'Flutter'
-  s.platform = :ios, '11.0'
+  s.source_files     = 'Classes/**/*'
+  s.dependency       'Flutter'
+  s.dependency       'Sodium', '~> 0.9.1'
+  s.platform         = :ios, '12.0'
+  s.swift_version    = ["4.0", "4.1", "4.2", "5.0", "5.1", "5.2", "5.3", "5.4", "5.5"]
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
-  s.swift_version = '5.0'
 end

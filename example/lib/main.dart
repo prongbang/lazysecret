@@ -23,7 +23,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _processLazySecret();
+    _processEncryptDecrypt();
+    _processDecrypt();
   }
 
   @override
@@ -40,7 +41,24 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void _processLazySecret() async {
+  void _processDecrypt() async {
+    const nonce = '8E6C8AA2606205B7F0C90FB1464886C2D8F6309CE3511589';
+    const serverSharedKey =
+        'D852E3150A5BAAA3FAFCFD2A81A455049318FA79AF834D2252D1F0EFD9C1EB56';
+    const ciphertext = '8281DB842B0A763D54B93E01A2799F4EE78274CF1B42E1EF95D7';
+
+    final plaintext = await _lazysecret.cryptoSecretBoxOpenEasy(
+      ciphertext,
+      nonce,
+      serverSharedKey,
+    );
+    print('Decrypt: $plaintext');
+
+    _result += 'Decrypt: $plaintext';
+    setState(() {});
+  }
+
+  void _processEncryptDecrypt() async {
     // Size
     final nonceSize = await _lazysecret.cryptoSecretBoxNonceBytes();
     final keySize = await _lazysecret.cryptoSecretBoxKeyBytes();
@@ -72,6 +90,8 @@ class _MyAppState extends State<MyApp> {
 
     final clientSharedKey = await _lazysecret.cryptoBoxBeforeNm(clientKx);
     final serverSharedKey = await _lazysecret.cryptoBoxBeforeNm(serverKx);
+    print('clientSharedKey: $clientSharedKey');
+    print('serverSharedKey: $serverSharedKey');
 
     // Payload
     const message = 'Lazysecret';
@@ -93,6 +113,8 @@ class _MyAppState extends State<MyApp> {
     );
     print('plaintext: $plaintext');
 
+    _result += 'clientSharedKey: $clientSharedKey\n';
+    _result += 'serverSharedKey: $serverSharedKey\n';
     _result += 'message: $message\n';
     _result += 'ciphertext: $ciphertext\n';
     _result += 'plaintext: $plaintext\n';

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:lazysecret/kx/key_pair.dart';
@@ -22,13 +24,16 @@ class LazySecretBox extends LazySecret {
 
   @override
   Future<Uint8List> randomBytesBuf(int size) async {
-    final data = await methodChannel.invokeMethod<Uint8List>(
+    final data = await methodChannel.invokeMethod<List<dynamic>>(
       randomBytesBufMethod,
       <String, dynamic>{
         'size': size,
       },
     );
-    return data ?? Uint8List(0);
+    if (data != null) {
+      return Uint8List.fromList(data.map((obj) => obj as int).toList());
+    }
+    return Uint8List(0);
   }
 
   @override
@@ -36,7 +41,7 @@ class LazySecretBox extends LazySecret {
     final data = await methodChannel.invokeMethod<String>(
       toHexMethod,
       <String, dynamic>{
-        'bin': bytes,
+        'bin': Platform.isIOS ? bytes.toList() : bytes,
       },
     );
     return data ?? '';
@@ -44,13 +49,16 @@ class LazySecretBox extends LazySecret {
 
   @override
   Future<Uint8List> toBin(String hexString) async {
-    final data = await methodChannel.invokeMethod<Uint8List>(
+    final data = await methodChannel.invokeMethod<List<dynamic>>(
       toBinMethod,
       <String, dynamic>{
         'hex': hexString,
       },
     );
-    return data ?? Uint8List(0);
+    if (data != null) {
+      return Uint8List.fromList(data.map((obj) => obj as int).toList());
+    }
+    return Uint8List(0);
   }
 
   @override
