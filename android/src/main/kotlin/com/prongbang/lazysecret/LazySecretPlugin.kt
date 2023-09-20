@@ -13,11 +13,9 @@ class LazySecretPlugin : FlutterPlugin, MethodCallHandler {
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
 
-    private lateinit var lazySecretMethodChannel: LazySecretMethodChannel
+    private val lazySecretMethodChannel by lazy { LazySecretMethodChannel(LazySecret.newInstance()) }
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        val lazySecret = LazySecret.newInstance()
-        lazySecretMethodChannel = LazySecretMethodChannel(lazySecret)
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "lazysecret")
         channel.setMethodCallHandler(this)
     }

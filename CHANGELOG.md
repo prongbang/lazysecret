@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Fix error MissingPluginException
+
 ## 1.0.0
 
 * Add functions

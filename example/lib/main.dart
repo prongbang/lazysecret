@@ -23,8 +23,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _processEncryptDecrypt();
-    _processDecrypt();
+    try {
+      _processEncryptDecrypt();
+      _processDecrypt();
+    } catch (e) {
+      print('ERROR: $e');
+      setState(() {
+        _result = 'ERROR: $e';
+      });
+    }
   }
 
   @override
