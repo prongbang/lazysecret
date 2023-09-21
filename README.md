@@ -17,6 +17,31 @@ dependencies:
 final lazysecret = LazySecret.instance;
 ```
 
+## Function
+
+```dart
+  Future<Uint8List> randomBytesBuf(int size)
+
+  Future<String> toHex(Uint8List bytes)
+
+  Future<Uint8List> toBin(String hexString)
+
+  Future<String> cryptoBoxBeforeNm(KeyPair keyPair)
+
+  Future<String> cryptoSecretBoxEasy(String plaintext, String nonce, String key)
+
+  Future<String> cryptoSecretBoxOpenEasy(String ciphertext, String nonce, String key)
+
+  Future<KeyPair> cryptoKxKeyPair()
+
+  Future<int> cryptoSecretBoxKeyBytes()
+
+  Future<int> cryptoSecretBoxNonceBytes()
+
+  Future<int> cryptoSecretBoxMacBytes()
+```
+
+
 ### Android
 
 - proguard-rules.pro
