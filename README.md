@@ -8,7 +8,7 @@ Lazysecret is a comprehensive Flutter implementation of the [libsodium](https://
 
 ```yaml
 dependencies:
-  lazysecret: ^1.0.1
+  lazysecret: ^1.0.2
 ```
 
 - Dart
@@ -54,6 +54,39 @@ final lazysecret = LazySecret.instance;
 -keepclassmembers class * extends com.sun.jna.** {
     <fields>;
     <methods>;
+}
+```
+
+### Web
+
+1. Download the `sodium.js` file
+
+https://raw.githubusercontent.com/jedisct1/libsodium.js/master/dist/browsers-sumo/sodium.js
+
+2. Add `sodium.js` to `web` directory
+
+```
+.
+└── web
+    ├── ...
+    └── sodium.js  <- here
+```
+
+3. Add script in `web/index.html`
+
+```html
+<script src="sodium.js"></script>
+```
+
+4. Add `LazySecret.init()` in `main.dart`
+
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await LazySecret.init();
+
+  runApp(const MyApp());
 }
 ```
 

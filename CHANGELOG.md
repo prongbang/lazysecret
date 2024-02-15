@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Support Flutter Web
+
 ## 1.0.1
 
 - Fix error MissingPluginException
