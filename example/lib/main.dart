@@ -3,8 +3,10 @@ import 'package:lazysecret/kx/key_pair.dart';
 
 import 'package:lazysecret/lazysecret.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await LazySecret.init();
 
   runApp(const MyApp());
 }
@@ -61,7 +63,7 @@ class _MyAppState extends State<MyApp> {
     );
     print('Decrypt: $plaintext');
 
-    _result += 'Decrypt: $plaintext';
+    _result += 'Decrypt: $plaintext\n';
     setState(() {});
   }
 
@@ -102,7 +104,7 @@ class _MyAppState extends State<MyApp> {
 
     // Payload
     const message = 'Lazysecret';
-    print('message: $message');
+    print('Encrypt - message: $message');
 
     // Encrypt
     final ciphertext = await _lazysecret.cryptoSecretBoxEasy(
