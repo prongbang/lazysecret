@@ -9,6 +9,10 @@ abstract class LazySecret {
 
   static LazySecret instance = LazySecretBox();
 
+  static init({Duration? duration}) async {
+    await Future.delayed(duration ?? const Duration(seconds: 1));
+  }
+
   Future<Uint8List> randomBytesBuf(int size) {
     throw UnimplementedError('randomBytesBuf() has not been implemented.');
   }

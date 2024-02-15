@@ -1,6 +1,6 @@
 name: lazysecret
 description: Lazysecret is a comprehensive Flutter implementation of the libsodium using secret_box library.
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/prongbang/lazysecret
 
 environment:
@@ -10,11 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  js: 0.6.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.3
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -38,11 +41,13 @@ flutter:
         pluginClass: LazySecretPlugin
       ios:
         pluginClass: LazySecretPlugin
+      web:
+        pluginClass: LazySecretWeb
+        fileName: lazysecret_web.dart
 
   # To add assets to your plugin package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+     - assets/wasm/
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages
