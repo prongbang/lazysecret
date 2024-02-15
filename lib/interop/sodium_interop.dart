@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:js/js.dart';
 
 @JS('crypto_box_BEFORENMBYTES')
+// non_constant_identifier_names
 external num get crypto_box_BEFORENMBYTES;
 
 @JS('crypto_box_NONCEBYTES')
