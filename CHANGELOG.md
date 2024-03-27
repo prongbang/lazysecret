@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Support TH language for Encrypt and Decrypt on Web
+
 ## 1.0.2
 
 - Support Flutter Web

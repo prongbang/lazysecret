@@ -1,6 +1,6 @@
 name: lazysecret
 description: Lazysecret is a comprehensive Flutter implementation of the libsodium using secret_box library.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/prongbang/lazysecret
 
 environment:

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -44,7 +45,7 @@ class LazySecretWeb extends LazySecret {
     String nonce,
     String key,
   ) async {
-    final m = Uint8List.fromList(plaintext.codeUnits);
+    final m = Uint8List.fromList(utf8.encode(plaintext));
     final n = HexConverter.hexToBytes(nonce);
     final k = HexConverter.hexToBytes(key);
     final result = interop.crypto_secretbox_easy(m, n, k);
@@ -61,7 +62,7 @@ class LazySecretWeb extends LazySecret {
     final n = HexConverter.hexToBytes(nonce);
     final k = HexConverter.hexToBytes(key);
     final result = interop.crypto_secretbox_open_easy(c, n, k);
-    return String.fromCharCodes(result);
+    return utf8.decode(result);
   }
 
   @override
