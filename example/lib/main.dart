@@ -103,7 +103,7 @@ class _MyAppState extends State<MyApp> {
     print('serverSharedKey: $serverSharedKey');
 
     // Payload
-    const message = 'Lazysecret';
+    const message = 'Lazysecret ทดสอบ';
     print('Encrypt - message: $message');
 
     // Encrypt
