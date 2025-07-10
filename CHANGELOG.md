@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Support 16KB aligned.
+
 ## 1.0.3
 
 - Support TH language for Encrypt and Decrypt on Web
