@@ -8,7 +8,7 @@ Lazysecret is a comprehensive Flutter implementation of the [libsodium](https://
 
 ```yaml
 dependencies:
-  lazysecret: ^1.0.4
+  lazysecret: ^1.0.5
 ```
 
 - Dart
